@@ -109,7 +109,7 @@ function makeMultiSelect(id,label,options,searchable=false){
   const btn=document.createElement('div');btn.className='ms-btn';btn.setAttribute('tabindex','0');
   btn.innerHTML=`<span class="ms-label">All</span><span class="badge" style="display:none">0</span><span class="arrow">▼</span>`;
   fg.appendChild(btn);
-  const drop=document.createElement('div');drop.className='ms-drop';
+  const drop=document.createElement('div');drop.className='ms-drop';drop.addEventListener('click',e=>e.stopPropagation());
   if(searchable){const si=document.createElement('div');si.className='ms-drop-search';si.innerHTML='<input type="text" placeholder="Search...">';si.querySelector('input').addEventListener('input',e=>{const q=e.target.value.toLowerCase();drop.querySelectorAll('.ms-opt').forEach(o=>{o.style.display=o.dataset.label.toLowerCase().includes(q)?'':'none';});});drop.appendChild(si);}
   const list=document.createElement('div');list.className='ms-drop-list';
   options.forEach(({val,text})=>{const opt=document.createElement('label');opt.className='ms-opt';opt.dataset.label=text;opt.innerHTML=`<input type="checkbox" value="${val}"> ${text}`;opt.querySelector('input').addEventListener('change',()=>{updateFilter(id,drop,btn);render();});list.appendChild(opt);});
