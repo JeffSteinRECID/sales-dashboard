@@ -122,7 +122,7 @@ tr:hover td{background:#f8fafc}
   <div class="toolbar">
     <div class="toolbar-title" id="sc-title">Sports &amp; Education</div>
     <input class="search-box" id="search" placeholder="Search customer..." oninput="onFilter()">
-    <div class="ctl" style="flex-shrink:0"><label>Status</label><select id="status-filter" onchange="onFilter()"><option value="">All statuses</option><option value="New">New</option><option value="In Progress">In Progress</option><option value="Contacted">Contacted</option><option value="No Response">No Response</option><option value="Converted">Converted</option><option value="Skip">Skip</option></select></div>
+    <div class="ctl" style="flex-shrink:0"><label>Status</label><select id="status-filter" onchange="onFilter()"><option value="">All statuses</option><option value="New">New</option><option value="In Progress">In Progress</option><option value="Contacted">Contacted</option><option value="No Response">No Response</option><option value="Converted">Converted</option><option value="Skip">Skip</option></select></div><div class="ctl" style="flex-shrink:0"><label>Action</label><select id="action-filter" onchange="onFilter()"><option value="">All actions</option><option value="">&#8212; unset &#8212;</option><option value="Email">Email</option><option value="Phone">Phone</option><option value="Delegate to Jane">Delegate to Jane</option><option value="Ignore">Ignore</option></select></div>
     <div class="ctl" style="flex-shrink:0"><button class="io-btn" onclick="exportData()">&#x1F4BE; Export</button><label class="io-btn" style="margin-left:4px"><input type="file" accept=".json" style="display:none" onchange="importData(this)">&#x1F4C2; Import</label></div>
     <div id="sc-controls"></div>
     <span class="freshness" id="freshness"></span>
@@ -148,7 +148,7 @@ function setLS(n,f,v){var d=getLS(n);d[f]=v;d.updated=new Date().toISOString().s
 var ACTS=['','Email','Phone','Delegate to Jane','Ignore'];
 var STATS=['New','In Progress','Contacted','No Response','Converted','Skip'];
 var SCOLS={'New':'#94a3b8','In Progress':'#f59e0b','Contacted':'#3b82f6','No Response':'#ef4444','Converted':'#10b981','Skip':'#6b7280'};
-function handleActChange(el){setLS(el.dataset.cust,'action',el.value);}
+function handleActChange(el){setLS(el.dataset.cust,'action',el.value);if(document.getElementById('action-filter').selectedIndex>0)onFilter();}
 function handleStatChange(el){setLS(el.dataset.cust,'status',el.value);el.style.borderColor=SCOLS[el.value]||'#94a3b8';el.style.color=SCOLS[el.value]||'#94a3b8';var sf=document.getElementById('status-filter').value;if(sf)onFilter();}
 function actSel(n){var d=getLS(n);var v=d.action||'';var s='';ACTS.forEach(function(a){s+='<option value="'+hesc(a)+'"'+(v===a?' selected':'')+'>'+(a||'&#8212; action &#8212;')+'</option>';});return '<select class="act-sel" data-cust="'+hesc(n)+'" onchange="handleActChange(this)">'+s+'</select>';}
 function statSel(n){var d=getLS(n);var v=d.status||'New';var c=SCOLS[v]||'#94a3b8';var s='';STATS.forEach(function(a){s+='<option value="'+hesc(a)+'"'+(v===a?' selected':'')+'>'+a+'</option>';});return '<select class="stat-sel" style="border-color:'+c+';color:'+c+'" data-cust="'+hesc(n)+'" onchange="handleStatChange(this)">'+s+'</select>';}
@@ -237,7 +237,9 @@ function sel(id){
 function render(){
   var s=SCEN[cur];var all=SNAP[cur]||[];filtered=s.filter(all);
   var sf=document.getElementById('status-filter').value;
-  if(sf){filtered=filtered.filter(function(r){return(getLS(r[0]).status||'New')===sf;});}
+  if(sf){filtered=filtered.filter(function(r){return(getLS(r[0]).status||'New')===sf;})}
+  var af=document.getElementById('action-filter').value;
+  if(af!==undefined&&af!==null&&document.getElementById('action-filter').selectedIndex>0){filtered=filtered.filter(function(r){return(getLS(r[0]).action||'')===af;});}
   var total=filtered.length;var start=page*pageSize;
   var end=Math.min(start+pageSize,total);var pageRows=filtered.slice(start,end);
   var totalPages=Math.ceil(total/pageSize)||1;
