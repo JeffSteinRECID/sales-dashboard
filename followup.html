@@ -64,8 +64,8 @@ tr:hover td{background:#f8fafc}
 .pg-size{border:1px solid #e2e8f0;border-radius:4px;padding:2px 5px;font-size:11px}
 .yr-pill{display:inline-flex;align-items:center;gap:3px;border:1px solid #cbd5e1;border-radius:4px;padding:3px 8px;font-size:11px;cursor:pointer;background:#fff;color:#64748b}
 .yr-pill input[type=checkbox]{width:12px;height:12px;cursor:pointer;accent-color:#1F4E79}
-.act-sel,.stat-sel{font-size:11px;padding:2px 4px;border-radius:4px;border:1.5px solid #334155;background:#1e293b;color:#e2e8f0;cursor:pointer;max-width:150px;}
-.stat-sel{font-weight:700;}
+.act-sel{font-size:11px;padding:2px 4px;border-radius:4px;border:1.5px solid #334155;background:#1e293b;color:#e2e8f0;cursor:pointer;width:128px;}
+.stat-sel{font-size:11px;padding:2px 4px;border-radius:4px;border:1.5px solid #334155;background:#1e293b;color:#e2e8f0;cursor:pointer;width:108px;font-weight:700;}
 .io-btn{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:4px;padding:3px 9px;font-size:11px;cursor:pointer;color:#475569;white-space:nowrap;}
 .io-btn:hover{background:#e2e8f0;}
 </style>
@@ -167,7 +167,7 @@ var SCEN={
     note:'Ordered in 2022–2025 but no orders yet in 2026.',
     ctls:sp_ctls,
     filter:function(rows){var yrs=yrsChecked('yr-cb-sp');var min=parseFloat(document.getElementById('c1').value)||0;var s=document.getElementById('c2').value;var q=(document.getElementById('search').value||'').toLowerCase();return rows.filter(function(r){return(!yrs.length||yrs.indexOf(String(r[3]))>=0)&&(!s||r[1]===s)&&r[2]>=min&&(!q||r[0].toLowerCase().indexOf(q)>=0);});},
-    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th>Action</th><th>Status</th><th></th></tr>',
+    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th style="width:140px;min-width:140px">Action</th><th style="width:120px;min-width:120px">Status</th><th></th></tr>',
     row:function(r,i){return'<tr><td class="rank">'+(i+1)+'</td><td class="cust-name">'+hesc(r[0])+'</td><td>'+sb(r[1])+'</td><td class="num">'+fmtYM(r[3],r[4])+'</td><td class="num yr-col">'+(r[5]?fmt(r[5]):'')+'</td><td class="num yr-col">'+(r[6]?fmt(r[6]):'')+'</td><td class="num yr-col">'+(r[7]?fmt(r[7]):'')+'</td><td class="num yr-col"><strong>'+(r[8]?fmt(r[8]):'')+'</strong></td><td>'+'<td>'+actSel(r[0])+'</td><td>'+statSel(r[0])+'</td><td>'+crmLink(r[0])+'</td></tr>';}
   },
   dormant:{
@@ -175,7 +175,7 @@ var SCEN={
     note:'No orders in 2026. Sorted by lifetime spend.',
     ctls:do_ctls,
     filter:function(rows){var yrs=yrsChecked('yr-cb-do');var min=parseFloat(document.getElementById('c1').value)||0;var s=document.getElementById('c2').value;var q=(document.getElementById('search').value||'').toLowerCase();return rows.filter(function(r){return(!yrs.length||yrs.indexOf(String(r[2]))>=0)&&(!s||r[1]===s)&&r[4]>=min&&(!q||r[0].toLowerCase().indexOf(q)>=0);});},
-    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">Lifetime $</th><th>Action</th><th>Status</th><th></th></tr>',
+    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">Lifetime $</th><th style="width:140px;min-width:140px">Action</th><th style="width:120px;min-width:120px">Status</th><th></th></tr>',
     row:function(r,i){return'<tr><td class="rank">'+(i+1)+'</td><td class="cust-name">'+hesc(r[0])+'</td><td>'+sb(r[1])+'</td><td class="num">'+fmtYM(r[2],r[3])+'</td><td class="num"><strong>'+fmt(r[4])+'</strong></td><td>'+'<td>'+actSel(r[0])+'</td><td>'+statSel(r[0])+'</td><td>'+crmLink(r[0])+'</td></tr>';}
   },
   declining:{
@@ -183,7 +183,7 @@ var SCEN={
     note:'2025 spend dropped 40%+ vs 2024. Sorted by largest dollar drop.',
     ctls:dc_ctls,
     filter:function(rows){var yrs=yrsChecked('yr-cb-dc');var min=parseFloat(document.getElementById('c1').value)||0;var dm=parseFloat(document.getElementById('c2').value)||40;var s=document.getElementById('c3').value;var q=(document.getElementById('search').value||'').toLowerCase();return rows.filter(function(r){return(!yrs.length||yrs.indexOf(String(r[5]))>=0)&&(!s||r[1]===s)&&r[2]>=min&&r[4]>=dm&&(!q||r[0].toLowerCase().indexOf(q)>=0);});},
-    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">2024 $</th><th class="num">2025 $</th><th class="num">Drop</th><th class="num">Last Order</th><th>Action</th><th>Status</th><th></th></tr>',
+    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">2024 $</th><th class="num">2025 $</th><th class="num">Drop</th><th class="num">Last Order</th><th style="width:140px;min-width:140px">Action</th><th style="width:120px;min-width:120px">Status</th><th></th></tr>',
     row:function(r,i){var dc=r[4]>=70?'drop-high':'drop-med';return'<tr><td class="rank">'+(i+1)+'</td><td class="cust-name">'+hesc(r[0])+'</td><td>'+sb(r[1])+'</td><td class="num">'+fmt(r[2])+'</td><td class="num">'+fmt(r[3])+'</td><td class="num"><span class="drop-pct '+dc+'">&#x25BC;'+r[4]+'%</span></td><td class="num">'+fmtYM(r[5],r[6])+'</td><td>'+'<td>'+actSel(r[0])+'</td><td>'+statSel(r[0])+'</td><td>'+crmLink(r[0])+'</td></tr>';}
   },
   lapsed:{
@@ -191,7 +191,7 @@ var SCEN={
     note:'Ordered exactly once, never returned.',
     ctls:la_ctls,
     filter:function(rows){var yrs=yrsChecked('yr-cb-la');var min=parseFloat(document.getElementById('c1').value)||0;var s=document.getElementById('c2').value;var q=(document.getElementById('search').value||'').toLowerCase();return rows.filter(function(r){return(!yrs.length||yrs.indexOf(String(r[2]))>=0)&&(!s||r[1]===s)&&r[4]>=min&&(!q||r[0].toLowerCase().indexOf(q)>=0);});},
-    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">Spend $</th><th>Action</th><th>Status</th><th></th></tr>',
+    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">Spend $</th><th style="width:140px;min-width:140px">Action</th><th style="width:120px;min-width:120px">Status</th><th></th></tr>',
     row:function(r,i){return'<tr><td class="rank">'+(i+1)+'</td><td class="cust-name">'+hesc(r[0])+'</td><td>'+sb(r[1])+'</td><td class="num">'+fmtYM(r[2],r[3])+'</td><td class="num"><strong>'+fmt(r[4])+'</strong></td><td>'+'<td>'+actSel(r[0])+'</td><td>'+statSel(r[0])+'</td><td>'+crmLink(r[0])+'</td></tr>';}
   },
   medals:{
@@ -199,7 +199,7 @@ var SCEN={
     note:'No 2026 order yet. Filter by the year of their last medals order.',
     ctls:me_ctls,
     filter:function(rows){var yrs=yrsChecked('yr-cb-m');var min=parseFloat((document.getElementById('c1')||{}).value)||0;var s=document.getElementById('c2').value;var q=(document.getElementById('search').value||'').toLowerCase();return rows.filter(function(r){return(!yrs.length||yrs.indexOf(String(r[3]))>=0)&&r[2]>=min&&(!s||r[1]===s)&&(!q||r[0].toLowerCase().indexOf(q)>=0);});},
-    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th>Action</th><th>Status</th><th></th></tr>',
+    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th style="width:140px;min-width:140px">Action</th><th style="width:120px;min-width:120px">Status</th><th></th></tr>',
     row:function(r,i){return'<tr><td class="rank">'+(i+1)+'</td><td class="cust-name">'+hesc(r[0])+'</td><td>'+sb(r[1])+'</td><td class="num">'+fmtYM(r[3],r[4])+'</td><td class="num yr-col">'+(r[5]?fmt(r[5]):'')+'</td><td class="num yr-col">'+(r[6]?fmt(r[6]):'')+'</td><td class="num yr-col">'+(r[7]?fmt(r[7]):'')+'</td><td class="num yr-col"><strong>'+(r[8]?fmt(r[8]):'')+'</strong></td><td>'+'<td>'+actSel(r[0])+'</td><td>'+statSel(r[0])+'</td><td>'+crmLink(r[0])+'</td></tr>';}
   },
   awards:{
@@ -207,7 +207,7 @@ var SCEN={
     note:'No 2026 order yet. Filter by the year of their last awards order.',
     ctls:aw_ctls,
     filter:function(rows){var yrs=yrsChecked('yr-cb-a');var min=parseFloat((document.getElementById('c1')||{}).value)||0;var s=document.getElementById('c2').value;var q=(document.getElementById('search').value||'').toLowerCase();return rows.filter(function(r){return(!yrs.length||yrs.indexOf(String(r[3]))>=0)&&r[2]>=min&&(!s||r[1]===s)&&(!q||r[0].toLowerCase().indexOf(q)>=0);});},
-    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th>Action</th><th>Status</th><th></th></tr>',
+    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th style="width:140px;min-width:140px">Action</th><th style="width:120px;min-width:120px">Status</th><th></th></tr>',
     row:function(r,i){return'<tr><td class="rank">'+(i+1)+'</td><td class="cust-name">'+hesc(r[0])+'</td><td>'+sb(r[1])+'</td><td class="num">'+fmtYM(r[3],r[4])+'</td><td class="num yr-col">'+(r[5]?fmt(r[5]):'')+'</td><td class="num yr-col">'+(r[6]?fmt(r[6]):'')+'</td><td class="num yr-col">'+(r[7]?fmt(r[7]):'')+'</td><td class="num yr-col"><strong>'+(r[8]?fmt(r[8]):'')+'</strong></td><td>'+'<td>'+actSel(r[0])+'</td><td>'+statSel(r[0])+'</td><td>'+crmLink(r[0])+'</td></tr>';}
   },
   badges:{
@@ -215,7 +215,7 @@ var SCEN={
     note:'Last name badge order before 2026 &mdash; due for annual refresh.',
     ctls:ba_ctls,
     filter:function(rows){var yrs=yrsChecked('yr-cb-ba');var min=parseFloat(document.getElementById('c1').value)||0;var s=document.getElementById('c2').value;var q=(document.getElementById('search').value||'').toLowerCase();return rows.filter(function(r){return(!yrs.length||yrs.indexOf(String(r[3]))>=0)&&(!s||r[1]===s)&&r[2]>=min&&(!q||r[0].toLowerCase().indexOf(q)>=0);});},
-    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">Badge Spend $</th><th>Action</th><th>Status</th><th></th></tr>',
+    hdr:'<tr><th class="rank">#</th><th>Customer</th><th>Sector</th><th class="num">Last Order</th><th class="num">Badge Spend $</th><th style="width:140px;min-width:140px">Action</th><th style="width:120px;min-width:120px">Status</th><th></th></tr>',
     row:function(r,i){return'<tr><td class="rank">'+(i+1)+'</td><td class="cust-name">'+hesc(r[0])+'</td><td>'+sb(r[1])+'</td><td class="num">'+fmtYM(r[3],r[4])+'</td><td class="num"><strong>'+fmt(r[2])+'</strong></td><td>'+'<td>'+actSel(r[0])+'</td><td>'+statSel(r[0])+'</td><td>'+crmLink(r[0])+'</td></tr>';}
   }
 };
