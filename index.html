@@ -8,9 +8,15 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#1a2a3a}
-header{background:linear-gradient(135deg,#1F4E79,#2e6fa8);color:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-header h1{font-size:1.35rem;font-weight:700;letter-spacing:.5px}
+header{background:linear-gradient(135deg,#1F4E79,#2e6fa8);color:#fff;padding:12px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+header h1{font-size:1.2rem;font-weight:700;letter-spacing:.5px;white-space:nowrap}
 header span{font-size:.8rem;opacity:.8}
+.tab-nav{display:flex;gap:3px;background:rgba(0,0,0,.2);border-radius:8px;padding:3px;margin-left:auto}
+.tab-nav a,.tab-nav span{padding:7px 18px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;cursor:default}
+.tab-nav span{background:#fff;color:#1F4E79}
+.tab-nav a{color:rgba(255,255,255,.75)}
+.tab-nav a:hover{background:rgba(255,255,255,.15);color:#fff}
+.hdr-range{font-size:.78rem;opacity:.7;margin-left:8px}
 .data-note{background:#e8f4e8;border-left:4px solid #2e7d32;padding:10px 20px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:.82rem;color:#1a4a1a}
 .data-note strong{color:#1a3a1a;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:2px}
 .data-note .src{display:flex;flex-direction:column}
@@ -62,10 +68,13 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
-<header style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-  <h1 style="flex:1">Recognition ID — Sales Dashboard</h1>
-  <span id="hdr-range"></span>
-  <a href="followup.html" style="color:#fff;font-size:.8rem;opacity:.85;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:4px 12px;border-radius:5px;white-space:nowrap">Follow-Up Tool &#x2192;</a>
+<header>
+  <h1>Recognition ID</h1>
+  <div class="tab-nav">
+    <span>&#x1F4CA; Sales Dashboard</span>
+    <a href="followup.html">&#x1F4CB; Follow-Up Tool</a>
+  </div>
+  <span class="hdr-range" id="hdr-range"></span>
 </header>
 <div class="data-note">
   <div class="src"><strong>QuickBooks</strong>Latest transaction: 26 June 2026</div>
